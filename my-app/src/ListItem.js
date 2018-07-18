@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import  './todo.css'
+import React, {Component} from 'react';
+import './todo.css'
 
 
 export default class ListItem extends Component {
@@ -13,18 +13,25 @@ export default class ListItem extends Component {
         }
     }
 
-    checkItem=()=>{
+    checkItem = (event) => {
+     let checked=  event.target.parentNode
+      if(checked==""){
+          document.getElementById(this.state.uuid).setAttribute("className","checked")
+      }
+        else{
+          document.getElementById(this.state.uuid).setAttribute("className","")
+      }
+    }
 
-}
+    editItem = () => {
 
-editItem=()=>{
+    }
 
-}
     //event, '{this.state.uuid}'    ondblclick
-    render (){
+    render() {
 
         return (
-            <li className={this.state.complete} onDoubleClick={this.editItem}>
+            <li id={this.state.uuid} className={this.state.complete} onDoubleClick={this.editItem}>
                 <input name="done-todo" type="checkbox" className="done-todo" onClick={this.checkItem}/>
                 {this.state.value}</li>
         )
