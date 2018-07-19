@@ -18,7 +18,7 @@ export default class  header extends Component{
         document.getElementById("input-text").value =""
         console.log(value);
         // this.props.type.push()
-        this.props.addfunc({id:uuid,name: "",value: value} )
+        this.props.addfunc({id:uuid,name: "",value: value  ,comple:false} )
     }
 
 

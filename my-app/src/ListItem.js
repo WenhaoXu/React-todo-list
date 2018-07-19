@@ -8,18 +8,26 @@ export default class ListItem extends Component {
         super();
         this.state = {
             uuid: props.id,
-            complete: props.comp,
-            value: props.value
+            name: props.name,
+            value: props.value,
+            completeStatus:props.comple,
+            // todoList:props.todoList
         }
     }
 
     checkItem = (event) => {
      let checked=  event.target.parentNode.className
+
       if(checked==""){
-          event.target.parentNode.className="checked"
+         event.target.parentNode.className="checked"
+          // this.props.todoList.find(item=>item.id==this.state.uuid).name="checked"
+          this.props.changeName(this.state.uuid,"checked")
       }
         else{
+          // this.state.todoList.find(item=>item.id==this.state.uuid).name=""
           event.target.parentNode.className=""
+          this.props.changeName(this.state.uuid,"")
+          // event.target.complete=false
       }
     }
 
@@ -45,7 +53,7 @@ export default class ListItem extends Component {
     render() {
 
         return (
-            <li id={this.state.uuid} className={this.state.complete} onDoubleClick={this.editItem}>
+            <li id={this.state.uuid} className={this.state.name} onDoubleClick={this.editItem}>
                 <input name="done-todo" type="checkbox" className="done-todo" onClick={this.checkItem}/>
                 {this.state.value}</li>
         )

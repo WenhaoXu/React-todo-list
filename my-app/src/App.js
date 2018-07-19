@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import './todo.css'
 import Header from './header'
 import Footer from './footer'
 import Item from './ListItem'
+
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          todoList:[],
-            statusOfList:"all"
+            todoList: [],
+            statusOfList: "All"
 
         };
     }
 
-    generateUUID=() =>{
+    generateUUID = () => {
         /*jshint bitwise:false */
         var i,
             random;
@@ -34,31 +35,69 @@ class App extends Component {
         return uuid;
     }
 
-     addItems=(obj)=>{
-        console.log(obj )
-         this.state.todoList.push(obj);
+    changeStatus = (value) => {
         this.setState({
-            todoList: this.state.todoList
+            statusOfList: value
+        })
+    }
+
+    addItems = (obj) => {
+        let todos=this.deepCopy(this.state.todoList)
+        todos.push(obj)
+        this.setState({
+            todoList: todos
         })
 
-         console.log(this.state.todoList)
-     }
+    }
 
 
+    filterByStatus = (todos, status) => {
 
+        const filterExecuters = {
+            All() {
+                return true;
+            },
+            Active(element) {
+                return element.name==="";
+            },
+            Complete(element) {
+                return element.name==="checked";
+            }
+        }
 
-  render() {
-    return (
-      <div className="App">
+        const result = todos.filter(filterExecuters[status]);
+        return result;
+    }
 
-          <Header  type={this.state.todoList} func={this.generateUUID} addfunc={this.addItems}/>
-          <Item  id={"1234-1442-21421-1414"} comp={""} value={"test ashffajfk"}  />
+    changeName=(id,content)=>{
+        let todos=this.deepCopy(this.state.todoList)
+        todos.find(item=>item.id==id).name=content
 
-          {this.state.todoList.map((x)=><Item id={x.id} comp="" value={x.value}/>)}
-          <Footer/>
-      </div>
-    );
-  }
+        this.setState({
+           todoList:todos
+    })
+      }
+
+    deepCopy(array) {
+        return JSON.parse(JSON.stringify(array));
+    }
+    render() {
+       let but=this
+        return (
+            <div className="container">
+                <div>
+                    <h2>Jquery To Do List</h2>
+                    <p>
+                        <em>Simple Todo List with adding and filter by diff status.</em>
+                    </p>
+                </div>
+                <Header type={this.state.todoList} func={this.generateUUID} addfunc={this.addItems}/>
+
+                {this.filterByStatus(this.state.todoList, this.state.statusOfList).map((x) => <Item key={x.id} id={x.id} name={x.name} value={x.value}  comple={x.complete}  changeName={(id,content)=>this.changeName(id,content)}  />)}
+                <Footer status={this.state.statusOfList} change={this.changeStatus}/>
+            </div>
+        );
+    }
 }
 
 export default App;
