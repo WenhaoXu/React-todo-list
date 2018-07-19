@@ -52,7 +52,7 @@ class App extends Component {
       <div className="App">
 
           <Header  type={this.state.todoList} func={this.generateUUID} addfunc={this.addItems}/>
-          <Item  id={"1234-1442-21421-1414"} comp={"checked"} value={"test ashffajfk"} />
+          <Item  id={"1234-1442-21421-1414"} comp={""} value={"test ashffajfk"}  />
 
           {this.state.todoList.map((x)=><Item id={x.id} comp="" value={x.value}/>)}
           <Footer/>

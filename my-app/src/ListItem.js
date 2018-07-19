@@ -14,16 +14,30 @@ export default class ListItem extends Component {
     }
 
     checkItem = (event) => {
-     let checked=  event.target.parentNode
+     let checked=  event.target.parentNode.className
       if(checked==""){
-          document.getElementById(this.state.uuid).setAttribute("className","checked")
+          event.target.parentNode.className="checked"
       }
         else{
-          document.getElementById(this.state.uuid).setAttribute("className","")
+          event.target.parentNode.className=""
       }
     }
 
-    editItem = () => {
+    componentDidMount(){
+        document.addEventListener("keydown",this.handleEnterKey);
+    }
+    componentWillUmount(){
+        document.removeEventListener("keydown",this.handleEenterKey);
+    }
+    handleEnterKey = (e) => {
+        if(e.keyCode === 13){
+            e.target.contentEditable="false";
+        }
+    }
+
+    editItem = (event) => {
+          event.target.contentEditable="true";
+
 
     }
 
